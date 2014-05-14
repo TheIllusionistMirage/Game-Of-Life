@@ -127,13 +127,13 @@ bool gol::RendererSFML::menu()
                 {
                     if(m_seedChoice == 12)
                         return false;
+
+                    else if(m_seedChoice == 11)
+                        isInMainMenu = false;
+
+                    else
+                        return true;
                 }
-
-                else if(m_seedChoice == 11)
-                    isInMainMenu = false;
-
-                else
-                    return true;
             }
 
             if(event.type == sf::Event::TextEntered && isInMainMenu)
@@ -142,6 +142,7 @@ bool gol::RendererSFML::menu()
                     choiceString += (char)event.text.unicode;
                 else if(event.text.unicode == 8 && choiceString.getSize() > 0)
 					choiceString.erase(choiceString.getSize() - 1, choiceString.getSize());
+
                 choiceText.setString(choiceString);
                 std::string str = choiceString.toAnsiString();
                 m_seedChoice = std::atoi(str.c_str());
