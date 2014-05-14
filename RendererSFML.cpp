@@ -163,7 +163,7 @@ bool gol::RendererSFML::menu()
                     userSeedText.setString(userSeedString);
                 }
 
-                if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Return)
+                if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Return && !userSeedString.isEmpty())
                 {
                     customSeedFile = userSeedString.toAnsiString();
                     setSeedFileName(customSeedFile);
