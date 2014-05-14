@@ -33,7 +33,7 @@
 #else
     #include <unistd.h>
     #define SLEEP usleep
-    #define SLEEP_TIME 200 * 100
+    #define SLEEP_TIME 200 * 1000
     #define CLEAR_SCREEN system("clear")
 #endif
 

@@ -131,7 +131,7 @@ bool gol::RendererSFML::menu()
                     else if(m_seedChoice == 11)
                         isInMainMenu = false;
 
-                    else
+                    else if(m_seedChoice < 11)
                         return true;
                 }
             }
@@ -163,7 +163,7 @@ bool gol::RendererSFML::menu()
                     userSeedText.setString(userSeedString);
                 }
 
-                if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Return)
+                if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Return && !userSeedString.isEmpty())
                 {
                     customSeedFile = userSeedString.toAnsiString();
                     setSeedFileName(customSeedFile);
@@ -206,7 +206,9 @@ bool gol::RendererSFML::render(const std::vector<std::vector<int>> &generation, 
 {
     sf::Text escapePlan("PRESS ESC TO GO BACK TO MAIN MENU", m_golbalFont, 12.f);
     escapePlan.setColor(sf::Color::Green);
-    escapePlan.setPosition(sf::Vector2f(gol::WIDTH - 250.f, gol::HEIGHT - 20.f));
+    escapePlan.setPosition(sf::Vector2f(gol::WIDTH - escapePlan.getLocalBounds().width - 2.f , gol::HEIGHT - 15.f));
+
+    sf::Vector2i m_position(sf::Vector2i(m_cell.getSize().x + 2, m_cell.getSize().y + 2));
 
     if(m_window.isOpen())
     {
@@ -226,13 +228,19 @@ bool gol::RendererSFML::render(const std::vector<std::vector<int>> &generation, 
 
         m_window.clear(sf::Color::Black);
 
+        float width = columns * m_position.x;
+        float height = rows * m_position.y;
+        float left = (gol::WIDTH - width) / 2.f;
+        float top = (gol::HEIGHT - height) / 2.f;
+
         for(int I = 0; I < rows; I++)
         {
             for(int J = 0; J < columns; J++)
             {
                 if(generation[I][J] == 1)
                 {
-                    m_cell.setPosition(sf::Vector2f(J * 10 + 10, I * 10 + 10));
+                    //m_cell.setPosition(sf::Vector2f(left + J * m_position.x + m_position.x, top + I * 10 + 10));
+                    m_cell.setPosition(sf::Vector2f(left + J * m_position.x, top + I * m_position.y));
                     m_window.draw(m_cell);
                 }
             }
